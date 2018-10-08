@@ -51,14 +51,13 @@ exports.getNextUniqueId = (callback) => {
         if (err) {
           throw ('error writing counter');
         } else {
-          callback(null, counterStr);
+          return callback(null, counterStr);
         }  
       });
     }
   });
 };
 
-exports.getNextUniqueId(() => {});
 
 
 
