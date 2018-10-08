@@ -16,32 +16,31 @@ exports.create = (text, callback) => {
         if (err) {
           throw ('error');
         } else {
-          callback(null, {id: id,
-                          text: text});
+          callback(null, {id: id, text: text});
         }
       });
     }
   });
-
-  
-  // make file -> id.txt
-  // write text to new file
-  // call callback
-  
-  
- 
-  // items[id] = text;
-  // callback(null, { id, text });
 };
 
-exports.create("hi", ()=>{});
-
 exports.readAll = (callback) => {
+  
+  //for file in dataDir
+  // add filename to array
+  // create object? response to client
   var data = [];
-  _.each(items, (text, id) => {
-    data.push({ id, text });
+  fs.readdir(exports.dataDir, (err, files) => {
+    if (err) {
+      throw ("error");
+    } else {
+      files.forEach((file) => {
+        var content = file.slice(0,-4);
+        data.push({id: content, text: content});
+      });
+      callback(null, data);
+    }
+    
   });
-  callback(null, data);
 };
 
 exports.readOne = (id, callback) => {
