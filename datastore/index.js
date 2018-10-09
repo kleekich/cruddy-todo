@@ -24,10 +24,6 @@ exports.create = (text, callback) => {
 };
 
 exports.readAll = (callback) => {
-  
-  //for file in dataDir
-  // add filename to array
-  // create object? response to client
   var data = [];
   fs.readdir(exports.dataDir, (err, files) => {
     if (err) {
@@ -44,12 +40,15 @@ exports.readAll = (callback) => {
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  var path = exports.dataDir + '/' + id + '.txt';
+  console.log(id);
+  fs.readFile(path, 'utf8', (err, data) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, {id: id, text: data});
+    }
+  });
 };
 
 exports.update = (id, text, callback) => {
